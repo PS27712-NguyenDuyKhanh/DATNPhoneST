@@ -709,3 +709,27 @@ color:white;
     font-size:14px;
 }
 
+.menu-item{
+position:relative;
+}
+
+.parent-category{
+display:block;
+padding:10px;
+font-weight:bold;
+}
+
+.sub-menu{
+padding-left:15px;
+}
+
+.sub-category{
+display:block;
+padding:6px 10px;
+font-size:14px;
+color:#555;
+}
+
+.sub-category:hover{
+color:#007bff;
+}
