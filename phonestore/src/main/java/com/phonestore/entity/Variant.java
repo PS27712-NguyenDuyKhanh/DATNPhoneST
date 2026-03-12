@@ -3,16 +3,16 @@ package com.phonestore.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "product_images")
-
+@Table(name = "variants")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ProductImage {
+public class Variant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +20,23 @@ public class ProductImage {
 
     private String color;
 
-    private String imageUrl;
+    private Double price;
 
+    private Double salePrice;
+
+    private Integer stock;
+
+    private LocalDateTime saleStart;
+
+    private LocalDateTime saleEnd;
+
+    // FK product
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
 
+    // 1 variant - many images
+    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL)
+    private List<Image> images;
 }

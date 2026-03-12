@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Chi tiết sản phẩm</title>
+
+    <link rel="stylesheet" href="../css/admin.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- SIDEBAR -->
+
+        <div class="sidebar">
+
+            <h2 class="logo">PhoneShop</h2>
+
+            <ul>
+
+                <li>
+                    <a href="admin.html">
+                        <i class="fa fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Acount.html">
+                        <i class="fa fa-user"></i>
+                        Quản lý tài khoản
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="product.html">
+                        <i class="fa fa-mobile"></i>
+                        Quản lý sản phẩm
+                    </a>
+                </li>
+
+                <li>
+                    <a href="order.html">
+                        <i class="fa fa-box"></i>
+                        Quản lý đơn hàng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="inventory.html">
+                        <i class="fa fa-warehouse"></i>
+                        Quản lý danh mục
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- MAIN -->
+
+        <div class="main">
+
+            <div class="topbar">
+
+                <h2>Chi tiết sản phẩm</h2>
+
+            </div>
+
+
+            <div class="product-detail">
+
+                <h3 id="productName"></h3>
+
+                <p><b>SKU:</b> <span id="productSku"></span></p>
+
+                <p><b>Mô tả:</b> <span id="productDesc"></span></p>
+
+
+                <h4>Cấu hình</h4>
+
+                <ul id="specList"></ul>
+
+
+                <h4>Variants</h4>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Màu</th>
+                            <th>Giá</th>
+                            <th>Tồn kho</th>
+                            <th>Ảnh</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="variantTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const API = "http://localhost:8081/api/admin/products/";
+
+        async function loadProduct() {
+
+            const params = new URLSearchParams(window.location.search);
+
+            const id = params.get("id");
+
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(API + id, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            if (!res.ok) {
+                console.log("API lỗi", res.status);
+                return;
+            }
+
+            const p = await res.json();
+
+            document.getElementById("productName").innerText = p.name;
+
+            document.getElementById("productSku").innerText = p.sku;
+
+            document.getElementById("productDesc").innerText = p.description;
+
+            const spec = p.specification;
+
+            const specList = document.getElementById("specList");
+
+            specList.innerHTML = `
+        <li>CPU: ${spec.cpu}</li>
+        <li>RAM: ${spec.ram}</li>
+        <li>ROM: ${spec.rom}</li>
+        <li>GPU: ${spec.gpu}</li>
+        <li>Camera: ${spec.camera}</li>
+        <li>Battery: ${spec.battery}</li>
+        <li>Screen: ${spec.screen}</li>
+        `;
+
+            const table = document.getElementById("variantTable");
+
+            table.innerHTML = "";
+
+            p.variants.forEach(v => {
+
+                const img = v.images?.[0]?.imageUrl || "";
+
+                const sale = v.salePrice ? `
+        <div style="color:red">
+        Giảm còn: ${v.salePrice}
+        </div>
+        <div style="font-size:12px">
+        ${v.saleStart?.slice(0, 10)} → ${v.saleEnd?.slice(0, 10)}
+        </div>
+        ` : "Không giảm";
+
+                table.innerHTML += `
+        <tr>
+
+        <td>${v.color}</td>
+
+        <td>
+        <div>Giá gốc: ${v.price}</div>
+        ${sale}
+        </td>
+
+        <td>${v.stock}</td>
+
+        <td>
+        <img src="http://localhost:8081${img}" width="60">
+        </td>
+
+        </tr>
+        `;
+            });
+
+        }
+
+        loadProduct();
+
+    </script>

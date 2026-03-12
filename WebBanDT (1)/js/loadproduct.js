@@ -1,9 +1,13 @@
 const API_PRODUCT = "http://localhost:8081/api/products";
 
-async function loadProducts(){
+async function loadProduct(){
 
     const res = await fetch(API_PRODUCT);
-    const products = await res.json();
+
+    const data = await res.json();
+
+    // FIX pagination
+    const products = data.content || data;
 
     const list = document.getElementById("productList");
 
@@ -11,30 +15,36 @@ async function loadProducts(){
 
     products.forEach(p => {
 
-        let image = "";
+        const variants = p.variants || [];
 
-        if(p.images && p.images.length > 0){
-            image = p.images[0].imageUrl;
-        }
+        if(variants.length === 0) return;
+
+        const firstVariant = variants[0];
+
+        const img = firstVariant.images?.[0]?.imageUrl || "";
+
+        const price = Math.min(...variants.map(v => v.price));
+
+        const stock = variants.reduce((sum,v)=>sum+(v.stock||0),0);
 
         list.innerHTML += `
-            <div class="product-card">
+        <div class="product-card">
 
-                <img src="${image}">
+            <img src="http://localhost:8081${img}" class="product-img">
 
-                <h4>${p.name}</h4>
+            <h3>${p.name}</h3>
 
-                <p class="price">${p.price} ₫</p>
+            <p class="price">${price.toLocaleString()} đ</p>
 
-                <a href="product-detail.html?id=${p.id}" class="btn-main">
-                    Xem chi tiết
-                </a>
+            <p class="stock">Còn ${stock} sản phẩm</p>
 
-            </div>
+            <a href="product-detail.html?id=${p.id}" class="btn-main">
+                Xem chi tiết
+            </a>
+
+        </div>
         `;
-
     });
-
 }
 
-loadProducts();
+window.onload = loadProduct;

@@ -1,7 +1,8 @@
 package com.phonestore.controller;
 
-import com.phonestore.entity.Product;
-import com.phonestore.repository.ProductRepository;
+import com.phonestore.dto.ProductDTO;
+import com.phonestore.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,22 +10,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 @CrossOrigin
+@RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepository productRepository;
-
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private final ProductService productService;
 
     @GetMapping
-    public List<Product> getAll(){
-        return productRepository.findAll();
+    public List<ProductDTO> getAll(){
+        return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Product getById(@PathVariable Long id){
-        return productRepository.findById(id).orElseThrow();
+    public ProductDTO getById(@PathVariable Long id){
+        return productService.getProduct(id);
     }
 
 }

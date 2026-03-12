@@ -1,0 +1,163 @@
+
+/* ===== PRODUCT DETAIL PAGE ===== */
+
+.product-detail{
+margin-top:120px;
+padding:40px 8%;
+}
+
+/* layout */
+
+.detail-container{
+display:flex;
+gap:60px;
+align-items:flex-start;
+}
+
+/* responsive */
+
+@media(max-width:900px){
+.detail-container{
+flex-direction:column;
+}
+}
+
+/* IMAGE */
+
+.detail-image{
+width:420px;
+}
+
+.detail-image img{
+width:100%;
+border-radius:18px;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+transition:0.3s;
+}
+
+.detail-image img:hover{
+transform:scale(1.03);
+}
+
+/* INFO */
+
+.detail-info{
+flex:1;
+}
+
+.detail-info h1{
+font-size:34px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.price{
+font-size:30px;
+color:#e53935;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.detail-info p{
+color:#666;
+line-height:1.6;
+margin-bottom:25px;
+}
+
+/* BUTTON ADD CART */
+
+.btn-main{
+background:linear-gradient(135deg,#8b1d40,#ff7875);
+border:none;
+color:white;
+padding:14px 30px;
+border-radius:30px;
+font-size:16px;
+cursor:pointer;
+display:inline-flex;
+align-items:center;
+gap:10px;
+transition:0.3s;
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.btn-main:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 25px rgba(0,0,0,0.25);
+}
+
+/* COLOR PICKER */
+
+.product-colors{
+display:flex;
+gap:12px;
+margin-top:20px;
+}
+
+.color-item{
+width:36px;
+height:36px;
+border-radius:50%;
+cursor:pointer;
+border:2px solid #ddd;
+transition:0.2s;
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+.color-item:hover{
+transform:scale(1.15);
+}
+
+.color-item.active{
+border:2px solid #000;
+}
+
+.product-colors button{
+padding:8px 12px;
+border-radius:6px;
+border:1px solid #ccc;
+cursor:pointer;
+background:white;
+}
+
+.product-colors button:hover{
+background:#eee;
+}
+
+/* BACK BUTTON */
+
+.btn-back{
+margin-left:20px;
+font-weight:500;
+text-decoration:none;
+color:#555;
+}
+
+.btn-back:hover{
+color:#8b1d40;
+}
+
+/* COLOR PICKER */
+
+.product-colors{
+display:flex;
+gap:12px;
+margin-top:20px;
+}
+
+.color-item{
+width:36px;
+height:36px;
+border-radius:50%;
+cursor:pointer;
+border:2px solid #ddd;
+transition:0.2s;
+}
+
+.color-item:hover{
+transform:scale(1.15);
+}
+
+.color-item.active{
+border:2px solid #000;
+}

@@ -1,37 +1,69 @@
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+const API = "http://localhost:8081/api/products/";
 
-async function loadProduct(){
+async function loadProduct() {
 
-    const res = await fetch(`http://localhost:8081/api/products/${id}`);
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!id) return;
+
+    const res = await fetch(API + id);
     const p = await res.json();
 
-    document.getElementById("name").innerText = p.name;
-    document.getElementById("price").innerText = p.price + " ₫";
-    document.getElementById("description").innerText = p.description;
+    document.getElementById("name").innerText = p.name || "";
+    document.getElementById("description").innerText = p.description || "";
 
-    if(p.images && p.images.length > 0){
-        document.getElementById("image").src = p.images[0].imageUrl;
+    const image = document.getElementById("image");
+    const price = document.getElementById("price");
+    const colors = document.getElementById("colors");
+    const specs = document.getElementById("specs");
+
+    const variants = p.variants || [];
+
+    // thông số
+    if(p.specification){
+
+        const s = p.specification;
+
+        specs.innerHTML = `
+            <li><b>CPU:</b> ${s.cpu || "-"}</li>
+            <li><b>RAM:</b> ${s.ram || "-"}</li>
+            <li><b>ROM:</b> ${s.rom || "-"}</li>
+            <li><b>GPU:</b> ${s.gpu || "-"}</li>
+            <li><b>Camera:</b> ${s.camera || "-"}</li>
+            <li><b>Pin:</b> ${s.battery || "-"}</li>
+            <li><b>Màn hình:</b> ${s.screen || "-"}</li>
+        `;
     }
 
-    const colors = document.getElementById("colors");
     colors.innerHTML = "";
 
-    p.images.forEach(img => {
+    variants.forEach((v, index) => {
 
-        colors.innerHTML += `
-            <button class="btn btn-outline-dark me-2"
-                onclick="changeImage('${img.imageUrl}')">
-                ${img.color}
-            </button>
-        `;
+        const btn = document.createElement("button");
+        btn.innerText = v.color;
+
+        btn.onclick = () => {
+
+            const img = v.images?.[0]?.imageUrl || "";
+            image.src = "http://localhost:8081" + img;
+
+            const finalPrice = v.salePrice || v.price || 0;
+            price.innerText = finalPrice.toLocaleString() + " đ";
+        };
+
+        colors.appendChild(btn);
+
+        if(index === 0){
+            const img = v.images?.[0]?.imageUrl || "";
+            image.src = "http://localhost:8081" + img;
+
+            const finalPrice = v.salePrice || v.price || 0;
+            price.innerText = finalPrice.toLocaleString() + " đ";
+        }
 
     });
 
-}
-
-function changeImage(url){
-    document.getElementById("image").src = url;
 }
 
 loadProduct();
