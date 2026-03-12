@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../css/product-detail.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
 
 <body>
@@ -19,19 +18,16 @@
 
         <div class="header-container">
 
-            <div class="logo">
+            <a href="home.html" class="logo">
                 <img src="../img/logo.jpg">
                 <span>PhoneShop</span>
-            </div>
+            </a>
 
             <div class="dropdown">
-
                 <button class="dropbtn">
                     Danh mục <i class="fa fa-chevron-down"></i>
                 </button>
-
                 <div class="dropdown-content" id="categoryMenu"></div>
-
             </div>
 
             <div class="search-box">
@@ -56,44 +52,85 @@
             </button>
 
         </div>
-
     </header>
 
 
     <!-- PRODUCT DETAIL -->
     <section class="product-detail">
 
-        <div class="detail-container">
+        <!-- LEFT : PRODUCT INFO -->
+        <div class="detail-info">
 
-            <!-- IMAGE -->
-            <div class="detail-image">
+            <h1 id="name"></h1>
 
-                <img id="image">
+            <span class="sale-badge">-20%</span>
 
-                <div id="colors" class="product-colors"></div>
+            <h2 class="price" id="price"></h2>
+
+            <p id="description"></p>
+
+            <div class="product-benefits">
+                <p>✔ Bảo hành chính hãng 12 tháng</p>
+                <p>✔ Miễn phí giao hàng toàn quốc</p>
+                <p>✔ Đổi trả trong 7 ngày</p>
+            </div>
+
+            <button class="btn-main">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Thêm vào giỏ
+            </button>
+
+            <button class="btn-buy">
+                Mua ngay
+            </button>
+
+            <a href="home.html" class="btn-back">
+                ⬅ Quay lại
+            </a>
+
+        </div>
+
+
+        <!-- RIGHT : IMAGE -->
+        <div class="detail-image">
+
+            <img id="image">
+
+            <div class="image-gallery" id="gallery"></div>
+
+            <div id="colors" class="product-colors"></div>
+
+        </div>
+
+
+        <!-- SPECIFICATIONS -->
+        <div class="product-tabs">
+
+            <div class="tab-buttons">
+
+                <button class="tab-btn active" onclick="openTab('specTab',this)">
+                    Thông số kỹ thuật
+                </button>
+
+                <button class="tab-btn" onclick="openTab('descTab',this)">
+                    Thông tin sản phẩm
+                </button>
 
             </div>
 
-            <!-- INFO -->
-            <div class="detail-info">
 
-                <h1 id="name"></h1>
-
-                <h2 class="price" id="price"></h2>
-
-                <p id="description"></p>
-
-                <h3>Thông số kỹ thuật</h3>
+            <!-- TAB 1 -->
+            <div id="specTab" class="tab-content active">
 
                 <ul id="specs" class="product-specs"></ul>
 
-                <button class="btn-main">
-                    <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
-                </button>
+            </div>
 
-                <a href="home.html" class="btn-back">
-                    ⬅ Quay lại
-                </a>
+
+            <!-- TAB 2 -->
+            <div id="descTab" class="tab-content">
+
+                <div class="product-description" id="fullDescription"></div>
 
             </div>
 
@@ -132,6 +169,7 @@
     </footer>
 
 
+    <script src="../js/home.js"></script>
     <script src="../js/product-detail.js"></script>
     <script src="../js/loadCategoriesUser.js"></script>
 
