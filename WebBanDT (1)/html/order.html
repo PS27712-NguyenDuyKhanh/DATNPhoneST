@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý đơn hàng</title>
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/admin/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
+
+    <script src="../js/admin/auth-check.js"></script>
 
     <div class="container">
 
@@ -28,7 +30,7 @@
                 </li>
 
                 <li>
-                    <a href="Acount.html">
+                    <a href="acount.html">
                         <i class="fa fa-user"></i>
                         Quản lý tài khoản
                     </a>
@@ -49,7 +51,7 @@
                 </li>
 
                 <li>
-                    <a href="inventory.html">
+                    <a href="categories.html">
                         <i class="fa fa-warehouse"></i>
                         Quản lý danh mục
                     </a>
@@ -71,7 +73,7 @@
 
             </ul>
 
-            <button class="logout">
+            <button class="logout" id="btnLogout">
                 <i class="fa fa-sign-out"></i>
                 Đăng xuất
             </button>
@@ -88,9 +90,9 @@
 
                 <h2 class="page-title">Quản lý đơn hàng</h2>
 
-                <div class="admin">
-                    <img src="">
-                    <span>Admin</span>
+                <div class="admin-user">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="adminName">Admin</span>
                 </div>
 
             </div>
@@ -226,7 +228,6 @@
         </div>
 
     </div>
-
 </body>
 
 </html>

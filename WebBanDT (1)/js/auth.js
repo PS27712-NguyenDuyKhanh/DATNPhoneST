@@ -23,6 +23,7 @@ async function login() {
             localStorage.setItem("token", data.token);
             localStorage.setItem("role", data.role);
             localStorage.setItem("name", data.username);
+            
 
             showMessage("Đăng nhập thành công", "success");
 

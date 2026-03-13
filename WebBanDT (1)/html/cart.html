@@ -1,223 +1,224 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8">
-<title>Giỏ Hàng</title>
+    <meta charset="UTF-8">
+    <title>Giỏ Hàng</title>
 
-<link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/cart.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
 <body>
 
-<div class="cart-page">
+    <div class="cart-page">
 
-<div class="cart-box">
+        <div class="cart-box">
 
-<h2>🛒 Giỏ hàng của bạn</h2>
+            <h2>🛒 Giỏ hàng của bạn</h2>
 
-<div id="cart-list">
+            <div id="cart-list">
 
-<!-- ITEM -->
-<div class="cart-item">
+                <!-- ITEM -->
+                <div class="cart-item">
 
-<img src="../img/dt13.jpg">
+                    <img src="../img/dt13.jpg">
 
-<div class="cart-info">
-<h4>iPhone 15 Pro Max</h4>
-<p>Giá: <span class="price">30000000</span> ₫</p>
-</div>
+                    <div class="cart-info">
+                        <h4>iPhone 15 Pro Max</h4>
+                        <p>Giá: <span class="price">30000000</span> ₫</p>
+                    </div>
 
-<div class="cart-qty">
-<button onclick="giam(this)">-</button>
-<input type="text" value="1">
-<button onclick="tang(this)">+</button>
-</div>
+                    <div class="cart-qty">
+                        <button onclick="giam(this)">-</button>
+                        <input type="text" value="1">
+                        <button onclick="tang(this)">+</button>
+                    </div>
 
-<div class="cart-price">30.000.000 ₫</div>
+                    <div class="cart-price">30.000.000 ₫</div>
 
-<i class="fa-solid fa-trash cart-remove" onclick="xoa(this)"></i>
+                    <i class="fa-solid fa-trash cart-remove" onclick="xoa(this)"></i>
 
-</div>
+                </div>
 
 
-<div class="cart-item">
+                <div class="cart-item">
 
-<img src="../img/dt15.jpg">
+                    <img src="../img/dt15.jpg">
 
-<div class="cart-info">
-<h4>Samsung S24 Ultra</h4>
-<p>Giá: <span class="price">28000000</span> ₫</p>
-</div>
+                    <div class="cart-info">
+                        <h4>Samsung S24 Ultra</h4>
+                        <p>Giá: <span class="price">28000000</span> ₫</p>
+                    </div>
 
-<div class="cart-qty">
-<button onclick="giam(this)">-</button>
-<input type="text" value="1">
-<button onclick="tang(this)">+</button>
-</div>
+                    <div class="cart-qty">
+                        <button onclick="giam(this)">-</button>
+                        <input type="text" value="1">
+                        <button onclick="tang(this)">+</button>
+                    </div>
 
-<div class="cart-price">28.000.000 ₫</div>
+                    <div class="cart-price">28.000.000 ₫</div>
 
-<i class="fa-solid fa-trash cart-remove" onclick="xoa(this)"></i>
+                    <i class="fa-solid fa-trash cart-remove" onclick="xoa(this)"></i>
 
-</div>
+                </div>
 
 
-<div class="cart-item">
+                <div class="cart-item">
 
-<img src="../img/dt16.jpg">
+                    <img src="../img/dt16.jpg">
 
-<div class="cart-info">
-<h4>Xiaomi 14 Pro</h4>
-<p>Giá: <span class="price">22000000</span> ₫</p>
-</div>
+                    <div class="cart-info">
+                        <h4>Xiaomi 14 Pro</h4>
+                        <p>Giá: <span class="price">22000000</span> ₫</p>
+                    </div>
 
-<div class="cart-qty">
-<button onclick="giam(this)">-</button>
-<input type="text" value="1">
-<button onclick="tang(this)">+</button>
-</div>
+                    <div class="cart-qty">
+                        <button onclick="giam(this)">-</button>
+                        <input type="text" value="1">
+                        <button onclick="tang(this)">+</button>
+                    </div>
 
-<div class="cart-price">22.000.000 ₫</div>
+                    <div class="cart-price">22.000.000 ₫</div>
 
-<i class="fa-solid fa-trash cart-remove" onclick="xoa(this)"></i>
+                    <i class="fa-solid fa-trash cart-remove" onclick="xoa(this)"></i>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
 
-<!-- TỔNG TIỀN -->
-<div class="cart-total">
+            <!-- TỔNG TIỀN -->
+            <div class="cart-total">
 
-<span>Tổng cộng:</span>
-<strong id="tong">0 ₫</strong>
+                <span>Tổng cộng:</span>
+                <strong id="tong">0 ₫</strong>
 
-</div>
+            </div>
 
 
-<!-- BUTTON -->
-<div class="cart-actions">
+            <!-- BUTTON -->
+            <div class="cart-actions">
 
-<a href="home.html" class="btn-back">← Tiếp tục mua</a>
+                <a href="home.html" class="btn-back">← Tiếp tục mua</a>
 
-<button class="btn-login" onclick="thanhToan()">Thanh toán</button>
+                <button class="btn-login" onclick="thanhToan()">Thanh toán</button>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 
-<script>
+    <script>
 
-/* FORMAT TIỀN */
+        /* FORMAT TIỀN */
 
-function formatTien(x){
-return x.toLocaleString('vi-VN') + " ₫"
-}
+        function formatTien(x) {
+            return x.toLocaleString('vi-VN') + " ₫"
+        }
 
 
-/* TÍNH TỔNG */
+        /* TÍNH TỔNG */
 
-function tinhTong(){
+        function tinhTong() {
 
-let items = document.querySelectorAll(".cart-item")
+            let items = document.querySelectorAll(".cart-item")
 
-let tong = 0
+            let tong = 0
 
-items.forEach(item=>{
+            items.forEach(item => {
 
-let price = parseInt(item.querySelector(".price").innerText)
-let qty = parseInt(item.querySelector("input").value)
+                let price = parseInt(item.querySelector(".price").innerText)
+                let qty = parseInt(item.querySelector("input").value)
 
-tong += price * qty
+                tong += price * qty
 
-})
+            })
 
-document.getElementById("tong").innerText = formatTien(tong)
+            document.getElementById("tong").innerText = formatTien(tong)
 
-}
+        }
 
-tinhTong()
+        tinhTong()
 
 
-/* TĂNG */
+        /* TĂNG */
 
-function tang(btn){
+        function tang(btn) {
 
-let input = btn.parentElement.querySelector("input")
+            let input = btn.parentElement.querySelector("input")
 
-input.value = parseInt(input.value)+1
+            input.value = parseInt(input.value) + 1
 
-tinhTong()
+            tinhTong()
 
-}
+        }
 
 
-/* GIẢM */
+        /* GIẢM */
 
-function giam(btn){
+        function giam(btn) {
 
-let input = btn.parentElement.querySelector("input")
+            let input = btn.parentElement.querySelector("input")
 
-let val = parseInt(input.value)
+            let val = parseInt(input.value)
 
-if(val>1){
-input.value = val-1
-}
+            if (val > 1) {
+                input.value = val - 1
+            }
 
-tinhTong()
+            tinhTong()
 
-}
+        }
 
 
-/* XÓA */
+        /* XÓA */
 
-function xoa(btn){
+        function xoa(btn) {
 
-btn.parentElement.remove()
+            btn.parentElement.remove()
 
-tinhTong()
+            tinhTong()
 
-}
+        }
 
 
-/* THANH TOÁN */
+        /* THANH TOÁN */
 
-function thanhToan(){
+        function thanhToan() {
 
-let items = document.querySelectorAll(".cart-item")
+            let items = document.querySelectorAll(".cart-item")
 
-let cart = []
+            let cart = []
 
-items.forEach(item=>{
+            items.forEach(item => {
 
-let name = item.querySelector("h4").innerText
-let price = parseInt(item.querySelector(".price").innerText)
-let qty = parseInt(item.querySelector("input").value)
-let img = item.querySelector("img").src
+                let name = item.querySelector("h4").innerText
+                let price = parseInt(item.querySelector(".price").innerText)
+                let qty = parseInt(item.querySelector("input").value)
+                let img = item.querySelector("img").src
 
-cart.push({
-name:name,
-price:price,
-qty:qty,
-img:img
-})
+                cart.push({
+                    name: name,
+                    price: price,
+                    qty: qty,
+                    img: img
+                })
 
-})
+            })
 
-localStorage.setItem("cart", JSON.stringify(cart))
+            localStorage.setItem("cart", JSON.stringify(cart))
 
-window.location.href = "checkout.html"
+            window.location.href = "checkout.html"
 
-}
+        }
 
-</script>
+    </script>
 
 </body>
+
 </html>

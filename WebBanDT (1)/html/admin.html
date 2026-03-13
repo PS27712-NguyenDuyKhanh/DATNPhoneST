@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
 
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/admin/admin.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
 <body>
+
+    <script src="../js/admin/auth-check.js"></script>
 
     <div class="container">
 
@@ -23,14 +25,14 @@
             <ul>
 
                 <li class="active">
-                    <a href="../admin/admin.html">
+                    <a href="/admin/admin.html">
                         <i class="fa fa-chart-line"></i>
                         Dashboard
                     </a>
                 </li>
 
                 <li>
-                    <a href="Acount.html">
+                    <a href="acount.html">
                         <i class="fa fa-user"></i>
                         Quản lý tài khoản
                     </a>
@@ -51,7 +53,7 @@
                 </li>
 
                 <li>
-                    <a href="inventory.html">
+                    <a href="categories.html">
                         <i class="fa fa-warehouse"></i>
                         Quản lý danh mục
                     </a>
@@ -73,7 +75,7 @@
 
             </ul>
 
-            <button class="logout">
+            <button class="logout" id="btnLogout">
                 <i class="fa fa-sign-out"></i>
                 Đăng xuất
             </button>
@@ -89,9 +91,9 @@
 
                 <input type="text" placeholder="Tìm kiếm...">
 
-                <div class="admin">
-                    <img src="">
-                    <span>Admin</span>
+                <div class="admin-user">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="adminName">Admin</span>
                 </div>
 
             </div>
@@ -185,101 +187,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/admin/admin.js"></script>
 
-    <script>
-
-        // BIỂU ĐỒ DOANH THU
-
-        const revenueCtx = document.getElementById('revenueChart');
-
-        new Chart(revenueCtx, {
-
-            type: 'line',
-
-            data: {
-
-                labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-
-                datasets: [{
-
-                    label: 'Doanh thu (VNĐ)',
-
-                    data: [20000000, 35000000, 15000000, 50000000, 42000000, 70000000, 65000000],
-
-                    borderColor: '#3b82f6',
-
-                    backgroundColor: 'rgba(59,130,246,0.2)',
-
-                    fill: true,
-
-                    tension: 0.4
-
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                }
-
-            }
-
-        });
-
-
-        // BIỂU ĐỒ SẢN PHẨM
-
-        const productCtx = document.getElementById('productChart');
-
-        new Chart(productCtx, {
-
-            type: 'bar',
-
-            data: {
-
-                labels: ['Apple', 'Samsung', 'Xiaomi', 'Oppo', 'Vivo'],
-
-                datasets: [{
-
-                    label: 'Số lượng sản phẩm',
-
-                    data: [25, 18, 12, 10, 8],
-
-                    backgroundColor: [
-
-                        '#3b82f6',
-                        '#10b981',
-                        '#f59e0b',
-                        '#ef4444',
-                        '#8b5cf6'
-
-                    ]
-
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-
-            }
-
-        });
-
-    </script>
 </body>
 
 </html>

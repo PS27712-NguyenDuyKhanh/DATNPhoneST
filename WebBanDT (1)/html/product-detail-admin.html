@@ -4,10 +4,10 @@
 <head>
 
     <meta charset="UTF-8">
-
     <title>Chi tiết sản phẩm</title>
 
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/admin/admin.css">
+    <link rel="stylesheet" href="../css/admin/product-detail-admin.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -18,15 +18,14 @@
     <div class="container">
 
         <!-- SIDEBAR -->
-
         <div class="sidebar">
 
             <h2 class="logo">PhoneShop</h2>
 
             <ul>
 
-                <li>
-                    <a href="admin.html">
+                <li class="active">
+                    <a href="../admin/admin.html">
                         <i class="fa fa-chart-line"></i>
                         Dashboard
                     </a>
@@ -39,7 +38,7 @@
                     </a>
                 </li>
 
-                <li class="active">
+                <li>
                     <a href="product.html">
                         <i class="fa fa-mobile"></i>
                         Quản lý sản phẩm
@@ -60,54 +59,104 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="coupon.html">
+                        <i class="fa fa-ticket"></i>
+                        Mã giảm giá
+                    </a>
+                </li>
+
+                <li>
+                    <a href="review.html">
+                        <i class="fa-solid fa-star"></i>
+                        Đánh giá
+                    </a>
+                </li>
+
             </ul>
+
+            <button class="logout" id="btnLogout">
+                <i class="fa fa-sign-out"></i>
+                Đăng xuất
+            </button>
 
         </div>
 
 
         <!-- MAIN -->
-
         <div class="main">
 
             <div class="topbar">
 
                 <h2>Chi tiết sản phẩm</h2>
 
+                <div class="admin-user">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="adminName">Admin</span>
+                </div>
+
             </div>
 
 
+            <!-- PRODUCT DETAIL -->
             <div class="product-detail">
 
                 <h3 id="productName"></h3>
 
-                <p><b>SKU:</b> <span id="productSku"></span></p>
-
-                <p><b>Mô tả:</b> <span id="productDesc"></span></p>
-
-
-                <h4>Cấu hình</h4>
-
-                <ul id="specList"></ul>
+                <p class="sku">
+                    <b>SKU:</b>
+                    <span id="productSku"></span>
+                </p>
 
 
-                <h4>Variants</h4>
+                <!-- VARIANTS -->
+                <div class="variant-box">
 
-                <table>
+                    <h4>Variants</h4>
 
-                    <thead>
+                    <table class="variant-table">
 
-                        <tr>
-                            <th>Màu</th>
-                            <th>Giá</th>
-                            <th>Tồn kho</th>
-                            <th>Ảnh</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Màu</th>
+                                <th>Giá</th>
+                                <th>Tồn kho</th>
+                                <th>Ảnh</th>
+                            </tr>
+                        </thead>
 
-                    </thead>
+                        <tbody id="variantTable"></tbody>
 
-                    <tbody id="variantTable"></tbody>
+                    </table>
 
-                </table>
+                </div>
+
+
+                <!-- CẤU HÌNH -->
+                <div class="spec-box">
+
+                    <h4>Cấu hình</h4>
+
+                    <ul id="specList"></ul>
+
+                </div>
+
+
+                <!-- MÔ TẢ -->
+                <div class="desc-box">
+
+                    <h4>Mô tả</h4>
+
+                    <div class="desc-wrapper">
+                        <div id="productDesc" class="desc-content"></div>
+                        <div class="fade"></div>
+                    </div>
+
+                    <button id="toggleDesc" class="btn-desc">
+                        Xem thêm
+                    </button>
+
+                </div>
 
             </div>
 
@@ -115,90 +164,8 @@
 
     </div>
 
-    <script>
+    <script src="../js/admin/product-detail-admin.js"></script>
 
-        const API = "http://localhost:8081/api/admin/products/";
+</body>
 
-        async function loadProduct() {
-
-            const params = new URLSearchParams(window.location.search);
-
-            const id = params.get("id");
-
-            const token = localStorage.getItem("token");
-
-            const res = await fetch(API + id, {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            });
-
-            if (!res.ok) {
-                console.log("API lỗi", res.status);
-                return;
-            }
-
-            const p = await res.json();
-
-            document.getElementById("productName").innerText = p.name;
-
-            document.getElementById("productSku").innerText = p.sku;
-
-            document.getElementById("productDesc").innerText = p.description;
-
-            const spec = p.specification;
-
-            const specList = document.getElementById("specList");
-
-            specList.innerHTML = `
-        <li>CPU: ${spec.cpu}</li>
-        <li>RAM: ${spec.ram}</li>
-        <li>ROM: ${spec.rom}</li>
-        <li>GPU: ${spec.gpu}</li>
-        <li>Camera: ${spec.camera}</li>
-        <li>Battery: ${spec.battery}</li>
-        <li>Screen: ${spec.screen}</li>
-        `;
-
-            const table = document.getElementById("variantTable");
-
-            table.innerHTML = "";
-
-            p.variants.forEach(v => {
-
-                const img = v.images?.[0]?.imageUrl || "";
-
-                const sale = v.salePrice ? `
-        <div style="color:red">
-        Giảm còn: ${v.salePrice}
-        </div>
-        <div style="font-size:12px">
-        ${v.saleStart?.slice(0, 10)} → ${v.saleEnd?.slice(0, 10)}
-        </div>
-        ` : "Không giảm";
-
-                table.innerHTML += `
-        <tr>
-
-        <td>${v.color}</td>
-
-        <td>
-        <div>Giá gốc: ${v.price}</div>
-        ${sale}
-        </td>
-
-        <td>${v.stock}</td>
-
-        <td>
-        <img src="http://localhost:8081${img}" width="60">
-        </td>
-
-        </tr>
-        `;
-            });
-
-        }
-
-        loadProduct();
-
-    </script>
+</html>
