@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 
 <head>
@@ -30,6 +31,10 @@ margin-bottom:10px;
 display:block;
 margin-bottom:8px;
 width:100%;
+}
+
+#description{
+height:200px;
 }
 
 </style>
@@ -64,13 +69,11 @@ Quản lý sản phẩm
 
 </div>
 
-
 <div class="main">
 
 <div class="topbar">
 <h2>Sửa sản phẩm</h2>
 </div>
-
 
 <div class="form-box">
 
@@ -88,7 +91,6 @@ Quản lý sản phẩm
 <option value="">-- Chọn danh mục --</option>
 </select>
 
-
 <h3>Cấu hình</h3>
 
 <input id="cpu" placeholder="CPU">
@@ -98,7 +100,6 @@ Quản lý sản phẩm
 <input id="camera" placeholder="Camera">
 <input id="battery" placeholder="Pin">
 <input id="screen" placeholder="Màn hình">
-
 
 <h3>Thông tin màu sắc và giá sản phẩm</h3>
 
@@ -120,6 +121,7 @@ Cập nhật sản phẩm
 
 </div>
 
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
 <script>
 
@@ -130,11 +132,22 @@ const params=new URLSearchParams(window.location.search);
 const productId=params.get("id");
 
 let variantIndex=0;
+let editor;
 
 
-/* =====================
-LOAD CATEGORY
-===================== */
+/* CKEDITOR */
+
+ClassicEditor
+.create(document.querySelector("#description"))
+.then(e=>{
+editor=e;
+})
+.catch(error=>{
+console.error(error);
+});
+
+
+/* LOAD CATEGORY */
 
 async function loadCategories(){
 
@@ -152,9 +165,7 @@ select.innerHTML+=`<option value="${c.id}">${c.name}</option>`;
 loadCategories();
 
 
-/* =====================
-UPLOAD IMAGE
-===================== */
+/* UPLOAD IMAGE */
 
 async function uploadImage(file){
 
@@ -180,9 +191,7 @@ return await res.text();
 }
 
 
-/* =====================
-ADD VARIANT
-===================== */
+/* ADD VARIANT */
 
 function addVariant(){
 
@@ -204,17 +213,11 @@ Biến thể ${variantIndex}
 <div class="variant-body" id="variantBody${variantIndex}">
 
 <input placeholder="Màu sắc" id="color${variantIndex}">
-
 <input placeholder="Giá bán" id="price${variantIndex}">
-
 <input placeholder="Giá khuyến mãi" id="salePrice${variantIndex}">
-
 <input type="datetime-local" id="saleStart${variantIndex}">
-
 <input type="datetime-local" id="saleEnd${variantIndex}">
-
 <input placeholder="Tồn kho" id="stock${variantIndex}">
-
 <input type="file" id="image${variantIndex}">
 
 </div>
@@ -227,9 +230,7 @@ container.insertAdjacentHTML("beforeend",html);
 }
 
 
-/* =====================
-TOGGLE VARIANT
-===================== */
+/* TOGGLE VARIANT */
 
 function toggleVariant(index){
 
@@ -244,9 +245,7 @@ body.style.display="none";
 }
 
 
-/* =====================
-GET VARIANTS
-===================== */
+/* GET VARIANTS */
 
 async function getVariants(){
 
@@ -255,7 +254,6 @@ let variants=[];
 for(let i=1;i<=variantIndex;i++){
 
 const color=document.getElementById("color"+i)?.value;
-
 if(!color) continue;
 
 const file=document.getElementById("image"+i)?.files[0];
@@ -295,29 +293,26 @@ return variants;
 }
 
 
-/* =====================
-LOAD PRODUCT
-===================== */
+/* LOAD PRODUCT */
 
 async function loadProduct(){
 
 const token=localStorage.getItem("token");
 
 const res=await fetch(API+productId,{
-
 headers:{
 "Authorization":"Bearer "+token
 }
-
 });
 
 const p=await res.json();
 
-
 document.getElementById("name").value=p.name;
 document.getElementById("sku").value=p.sku;
 document.getElementById("os").value=p.os;
-document.getElementById("description").value=p.description;
+
+editor.setData(p.description || "");
+
 document.getElementById("categoryId").value=p.categoryId;
 
 
@@ -357,12 +352,10 @@ document.getElementById("stock"+variantIndex).value=v.stock;
 
 }
 
-loadProduct();
+setTimeout(loadProduct,500);
 
 
-/* =====================
-UPDATE PRODUCT
-===================== */
+/* UPDATE PRODUCT */
 
 async function updateProduct(){
 
@@ -378,7 +371,7 @@ sku:document.getElementById("sku").value,
 
 os:document.getElementById("os").value,
 
-description:document.getElementById("description").value,
+description:editor.getData(),
 
 categoryId:Number(document.getElementById("categoryId").value),
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class ProductService {
     private final SpecificationRepository specificationRepository;
     private final VariantRepository variantRepository;
     private final ImageRepository imageRepository;
+    private final CategoryRepository categoryRepository;
 
     // =========================
     // CREATE
@@ -123,12 +125,23 @@ public class ProductService {
     // =========================
     // PAGINATION
     // =========================
-    public Page<ProductDTO> getProducts(int page, int size){
+    public Page<ProductDTO> getProductsByCategory(Long categoryId, int page, int size){
 
         Pageable pageable = PageRequest.of(page, size);
 
+        List<Long> categoryIds = new ArrayList<>();
+
+        categoryIds.add(categoryId);
+
+        // tìm category con
+        List<Category> children = categoryRepository.findByParentId(categoryId);
+
+        for(Category c : children){
+            categoryIds.add(c.getId());
+        }
+
         return productRepository
-                .findAll(pageable)
+                .findByCategoryIdIn(categoryIds, pageable)
                 .map(ProductMapper::toDTO);
     }
 
@@ -143,10 +156,18 @@ public class ProductService {
         return ProductMapper.toDTO(product);
     }
 
+    // =========================
+// PAGINATION (ADMIN)
+// =========================
+    public Page<ProductDTO> getProducts(int page, int size){
 
-    // =========================
-    // SAVE SPECIFICATION
-    // =========================
+        Pageable pageable = PageRequest.of(page, size);
+
+        return productRepository
+                .findAll(pageable)
+                .map(ProductMapper::toDTO);
+    }
+
     private void saveSpecification(CreateProductRequest request, Product product) {
 
         if (request.getSpecification() == null) return;

@@ -1,228 +1,229 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<title>Thêm sản phẩm</title>
 
-    <title>Thêm sản phẩm</title>
+<link rel="stylesheet" href="../css/admin.css">
+<link rel="stylesheet" href="../css/create-product.css">
 
-    <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/create-product.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <div class="sidebar">
+<div class="sidebar">
 
-            <h2 class="logo">PhoneShop</h2>
+<h2 class="logo">PhoneShop</h2>
 
-            <ul>
+<ul>
 
-                <li class="active">
-                    <a href="../admin/admin.html">
-                        <i class="fa fa-chart-line"></i>
-                        Dashboard
-                    </a>
-                </li>
+<li class="active">
+<a href="../admin/admin.html">
+<i class="fa fa-chart-line"></i>
+Dashboard
+</a>
+</li>
 
-                <li>
-                    <a href="Acount.html">
-                        <i class="fa fa-user"></i>
-                        Quản lý tài khoản
-                    </a>
-                </li>
+<li>
+<a href="Acount.html">
+<i class="fa fa-user"></i>
+Quản lý tài khoản
+</a>
+</li>
 
-                <li>
-                    <a href="product.html">
-                        <i class="fa fa-mobile"></i>
-                        Quản lý sản phẩm
-                    </a>
-                </li>
+<li>
+<a href="product.html">
+<i class="fa fa-mobile"></i>
+Quản lý sản phẩm
+</a>
+</li>
 
-                <li>
-                    <a href="order.html">
-                        <i class="fa fa-box"></i>
-                        Quản lý đơn hàng
-                    </a>
-                </li>
+<li>
+<a href="order.html">
+<i class="fa fa-box"></i>
+Quản lý đơn hàng
+</a>
+</li>
 
-                <li>
-                    <a href="inventory.html">
-                        <i class="fa fa-warehouse"></i>
-                        Quản lý danh mục
-                    </a>
-                </li>
+<li>
+<a href="inventory.html">
+<i class="fa fa-warehouse"></i>
+Quản lý danh mục
+</a>
+</li>
 
-                <li>
-                    <a href="coupon.html">
-                        <i class="fa fa-ticket"></i>
-                        Mã giảm giá
-                    </a>
-                </li>
+<li>
+<a href="coupon.html">
+<i class="fa fa-ticket"></i>
+Mã giảm giá
+</a>
+</li>
 
-                <li>
-                    <a href="review.html">
-                        <i class="fa-solid fa-star"></i>
-                        Đánh giá
-                    </a>
-                </li>
+<li>
+<a href="review.html">
+<i class="fa-solid fa-star"></i>
+Đánh giá
+</a>
+</li>
 
-            </ul>
+</ul>
 
-            <button class="logout">
-                <i class="fa fa-sign-out"></i>
-                Đăng xuất
-            </button>
+<button class="logout">
+<i class="fa fa-sign-out"></i>
+Đăng xuất
+</button>
 
-            </ul>
+</div>
 
-        </div>
+<div class="main">
 
+<div class="topbar">
+<h2>Thêm sản phẩm</h2>
+</div>
 
-        <div class="main">
+<div class="form-box">
 
-            <div class="topbar">
-                <h2>Thêm sản phẩm</h2>
-            </div>
+<h3>Thông tin sản phẩm</h3>
 
+<input id="name" placeholder="Tên sản phẩm">
 
-            <div class="form-box">
+<input id="sku" placeholder="SKU">
 
-                <h3>Thông tin sản phẩm</h3>
+<input id="os" placeholder="Hệ điều hành">
 
-                <input id="name" placeholder="Tên sản phẩm">
+<textarea id="description" placeholder="Mô tả sản phẩm"></textarea>
 
-                <input id="sku" placeholder="SKU">
+<select id="categoryId">
+<option value="">-- Chọn danh mục --</option>
+</select>
 
-                <input id="os" placeholder="Hệ điều hành">
+<h3>Cấu hình</h3>
 
-                <textarea id="description" placeholder="Mô tả"></textarea>
+<input id="cpu" placeholder="CPU">
+<input id="ram" placeholder="RAM">
+<input id="rom" placeholder="ROM">
+<input id="gpu" placeholder="GPU">
+<input id="camera" placeholder="Camera">
+<input id="battery" placeholder="Pin">
+<input id="screen" placeholder="Màn hình">
 
-                <select id="categoryId">
-                    <option value="">-- Chọn danh mục --</option>
-                </select>
+<h3>Thông tin màu sắc và giá sản phẩm</h3>
 
+<div id="variantContainer"></div>
 
-                <h3>Cấu hình</h3>
+<button onclick="addVariant()">+ Thêm màu sắc sản phẩm</button>
 
-                <input id="cpu" placeholder="CPU">
+<br><br>
 
-                <input id="ram" placeholder="RAM">
+<button onclick="createProduct()">Tạo sản phẩm</button>
 
-                <input id="rom" placeholder="ROM">
+</div>
 
-                <input id="gpu" placeholder="GPU">
+</div>
 
-                <input id="camera" placeholder="Camera">
+</div>
 
-                <input id="battery" placeholder="Pin">
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
-                <input id="screen" placeholder="Màn hình">
+<script>
 
+const API = "http://localhost:8081/api/admin/products";
+const CATEGORY_API = "http://localhost:8081/api/categories";
 
-                <h3>Thông tin màu sắc và giá sản phẩm</h3>
+let variantIndex = 0;
+let editor;
 
-                <div id="variantContainer"></div>
 
-                <button onclick="addVariant()">
-                    + Thêm màu sắc sản phẩm
-                </button>
+/* LOAD CATEGORY */
 
+async function loadCategories(){
 
-                <br><br>
+const res = await fetch(CATEGORY_API);
+const data = await res.json();
 
-                <button onclick="createProduct()">Tạo sản phẩm</button>
+const select = document.getElementById("categoryId");
 
-            </div>
+select.innerHTML = `<option value="">-- Chọn danh mục --</option>`;
 
-        </div>
+data.forEach(c=>{
 
-    </div>
+    // chỉ hiển thị category con
+    if(c.parent){
 
+        select.innerHTML += `
+        <option value="${c.id}">
+            ${c.parent.name} > ${c.name}
+        </option>
+        `;
 
-    <script>
+    }
 
-        const API = "http://localhost:8081/api/admin/products";
-        const CATEGORY_API = "http://localhost:8081/api/categories";
+});
 
-        let variantIndex = 0;
+}
 
+loadCategories();
 
-        /* =====================
-        LOAD CATEGORY
-        ===================== */
 
-        async function loadCategories() {
+/* CKEDITOR */
 
-            const res = await fetch(CATEGORY_API);
+ClassicEditor
+.create(document.querySelector("#description"))
+.then(e=>{
+editor = e;
+})
+.catch(error=>{
+console.error(error);
+});
 
-            const data = await res.json();
 
-            const select = document.getElementById("categoryId");
+/* UPLOAD IMAGE */
 
-            data.forEach(c => {
+async function uploadImage(file){
 
-                select.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+const formData = new FormData();
+formData.append("file", file);
 
-            });
+const token = localStorage.getItem("token");
 
-        }
+const res = await fetch("http://localhost:8081/api/file/upload",{
 
-        loadCategories();
+method:"POST",
 
+headers:{
+"Authorization":"Bearer " + token
+},
 
-        /* =====================
-        UPLOAD IMAGE
-        ===================== */
+body:formData
 
-        async function uploadImage(file) {
+});
 
-            const formData = new FormData();
+return await res.text();
 
-            formData.append("file", file);
+}
 
-            const token = localStorage.getItem("token");
 
-            const res = await fetch("http://localhost:8081/api/file/upload", {
+/* ADD VARIANT */
 
-                method: "POST",
+function addVariant(){
 
-                headers: {
-                    "Authorization": "Bearer " + token
-                },
+const container = document.getElementById("variantContainer");
 
-                body: formData
+document.querySelectorAll(".variant-body").forEach(v=>{
+v.style.display="none";
+});
 
-            });
+variantIndex++;
 
-            return await res.text();
+const html = `
 
-        }
-
-
-        /* =====================
-        ADD VARIANT
-        ===================== */
-
-        function addVariant() {
-
-            const container = document.getElementById("variantContainer");
-
-            /* thu variant cũ */
-
-            document.querySelectorAll(".variant-body").forEach(v => {
-                v.style.display = "none";
-            });
-
-            variantIndex++;
-
-            const html = `
 <div class="variant-card">
 
 <div class="variant-header" onclick="toggleVariant(${variantIndex})">
@@ -232,168 +233,149 @@ Biến thể ${variantIndex}
 <div class="variant-body" id="variantBody${variantIndex}">
 
 <input placeholder="Màu sắc" id="color${variantIndex}">
-
 <input placeholder="Giá bán" id="price${variantIndex}">
-
 <input placeholder="Giá khuyến mãi" id="salePrice${variantIndex}">
-
 <input type="datetime-local" id="saleStart${variantIndex}">
-
 <input type="datetime-local" id="saleEnd${variantIndex}">
-
 <input placeholder="Tồn kho" id="stock${variantIndex}">
-
 <input type="file" id="image${variantIndex}">
 
 </div>
 
 </div>
+
 `;
 
-            container.insertAdjacentHTML("beforeend", html);
+container.insertAdjacentHTML("beforeend",html);
 
-        }
+}
 
 
-        /* =====================
-        TOGGLE VARIANT
-        ===================== */
+/* TOGGLE VARIANT */
 
-        function toggleVariant(index) {
+function toggleVariant(index){
 
-            const body = document.getElementById("variantBody" + index);
+const body = document.getElementById("variantBody"+index);
 
-            if (body.style.display === "none") {
+if(body.style.display==="none"){
+body.style.display="block";
+}else{
+body.style.display="none";
+}
 
-                body.style.display = "block";
+}
 
-            } else {
 
-                body.style.display = "none";
+/* GET VARIANTS */
 
-            }
+async function getVariants(){
 
-        }
+let variants = [];
 
+for(let i=1;i<=variantIndex;i++){
 
-        /* =====================
-        GET VARIANTS
-        ===================== */
+const color = document.getElementById("color"+i)?.value;
+if(!color) continue;
 
-        async function getVariants() {
+const file = document.getElementById("image"+i)?.files[0];
 
-            let variants = [];
+let imageUrl="";
 
-            for (let i = 1; i <= variantIndex; i++) {
+if(file){
+imageUrl = await uploadImage(file);
+}
 
-                const color = document.getElementById("color" + i)?.value;
+variants.push({
 
-                if (!color) continue;
+color:color,
 
-                const file = document.getElementById("image" + i)?.files[0];
+price:Number(document.getElementById("price"+i).value),
 
-                let imageUrl = "";
+salePrice:Number(document.getElementById("salePrice"+i).value),
 
-                if (file) {
+saleStart:document.getElementById("saleStart"+i).value,
 
-                    imageUrl = await uploadImage(file);
+saleEnd:document.getElementById("saleEnd"+i).value,
 
-                }
+stock:Number(document.getElementById("stock"+i).value),
 
-                variants.push({
+images:[
+{
+imageUrl:imageUrl
+}
+]
 
-                    color: color,
+});
 
-                    price: Number(document.getElementById("price" + i).value),
+}
 
-                    salePrice: Number(document.getElementById("salePrice" + i).value),
+return variants;
 
-                    saleStart: document.getElementById("saleStart" + i).value,
+}
 
-                    saleEnd: document.getElementById("saleEnd" + i).value,
 
-                    stock: Number(document.getElementById("stock" + i).value),
+/* CREATE PRODUCT */
 
-                    images: [
-                        {
-                            imageUrl: imageUrl
-                        }
-                    ]
+async function createProduct(){
 
-                });
+const token = localStorage.getItem("token");
 
-            }
+const variants = await getVariants();
 
-            return variants;
+const data = {
 
-        }
+name:document.getElementById("name").value,
 
+sku:document.getElementById("sku").value,
 
-        /* =====================
-        CREATE PRODUCT
-        ===================== */
+os:document.getElementById("os").value,
 
-        async function createProduct() {
+description:editor.getData(),
 
-            const token = localStorage.getItem("token");
+categoryId:Number(document.getElementById("categoryId").value),
 
-            const variants = await getVariants();
+specification:{
 
-            const data = {
+cpu:document.getElementById("cpu").value,
 
-                name: document.getElementById("name").value,
+ram:document.getElementById("ram").value,
 
-                sku: document.getElementById("sku").value,
+rom:document.getElementById("rom").value,
 
-                os: document.getElementById("os").value,
+gpu:document.getElementById("gpu").value,
 
-                description: document.getElementById("description").value,
+camera:document.getElementById("camera").value,
 
-                categoryId: Number(document.getElementById("categoryId").value),
+battery:document.getElementById("battery").value,
 
-                specification: {
+screen:document.getElementById("screen").value
 
-                    cpu: document.getElementById("cpu").value,
+},
 
-                    ram: document.getElementById("ram").value,
+variants:variants
 
-                    rom: document.getElementById("rom").value,
+};
 
-                    gpu: document.getElementById("gpu").value,
+await fetch(API,{
 
-                    camera: document.getElementById("camera").value,
+method:"POST",
 
-                    battery: document.getElementById("battery").value,
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+token
+},
 
-                    screen: document.getElementById("screen").value
+body:JSON.stringify(data)
 
-                },
+});
 
-                variants: variants
+alert("Thêm sản phẩm thành công");
 
-            };
+window.location.href="product.html";
 
-            await fetch(API, {
+}
 
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                },
-
-                body: JSON.stringify(data)
-
-            });
-
-            alert("Thêm sản phẩm thành công");
-
-            window.location.href = "product.html";
-
-        }
-
-    </script>
+</script>
 
 </body>
-
 </html>

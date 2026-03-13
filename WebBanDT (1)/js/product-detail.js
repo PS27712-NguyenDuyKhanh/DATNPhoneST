@@ -6,104 +6,108 @@ LOAD PRODUCT DETAIL
 
 async function loadProduct() {
 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
 
-    if (!id) return;
+if (!id) return;
 
-    const res = await fetch(API + id);
-    const p = await res.json();
+const res = await fetch(API + id);
+const p = await res.json();
 
-    document.getElementById("name").innerText = p.name || "";
-    document.getElementById("description").innerText = p.description || "";
-    document.getElementById("fullDescription").innerText = p.description || "";
+document.getElementById("name").innerText = p.name || "";
 
-    const image = document.getElementById("image");
-    const price = document.getElementById("price");
-    const colors = document.getElementById("colors");
-    const specs = document.getElementById("specs");
+/* HIỂN THỊ HTML DESCRIPTION */
 
-    const variants = p.variants || [];
+document.getElementById("description").innerHTML = p.description || "";
+document.getElementById("fullDescription").innerHTML = p.description || "";
 
-    /* =========================
-    SPECIFICATIONS
-    ========================= */
+const image = document.getElementById("image");
+const price = document.getElementById("price");
+const colors = document.getElementById("colors");
+const specs = document.getElementById("specs");
 
-    if (p.specification) {
+const variants = p.variants || [];
 
-        const s = p.specification;
+/* =========================
+SPECIFICATIONS
+========================= */
 
-        specs.innerHTML = `
-            <li><span>CPU</span><span>${s.cpu || "-"}</span></li>
-            <li><span>RAM</span><span>${s.ram || "-"}</span></li>
-            <li><span>ROM</span><span>${s.rom || "-"}</span></li>
-            <li><span>GPU</span><span>${s.gpu || "-"}</span></li>
-            <li><span>Camera</span><span>${s.camera || "-"}</span></li>
-            <li><span>Pin</span><span>${s.battery || "-"}</span></li>
-            <li><span>Màn hình</span><span>${s.screen || "-"}</span></li>
-        `;
-    }
+if (p.specification) {
 
-    /* =========================
-    COLORS
-    ========================= */
+const s = p.specification;
 
-    colors.innerHTML = "";
+specs.innerHTML = `
 
-    variants.forEach((v, index) => {
+<li><span>CPU</span><span>${s.cpu || "-"}</span></li>
+<li><span>RAM</span><span>${s.ram || "-"}</span></li>
+<li><span>ROM</span><span>${s.rom || "-"}</span></li>
+<li><span>GPU</span><span>${s.gpu || "-"}</span></li>
+<li><span>Camera</span><span>${s.camera || "-"}</span></li>
+<li><span>Pin</span><span>${s.battery || "-"}</span></li>
+<li><span>Màn hình</span><span>${s.screen || "-"}</span></li>
+`;
 
-        const btn = document.createElement("button");
+}
 
-        let color = (v.color || "").toLowerCase();
+/* =========================
+COLORS
+========================= */
 
-        if (color === "đen") color = "black";
-        else if (color === "trắng") color = "white";
-        else if (color === "đỏ") color = "red";
-        else if (color === "xanh") color = "green";
-        else if (color === "xanh dương") color = "blue";
-        else if (color === "vàng") color = "gold";
-        else if (color === "cam") color = "orange";
-        else if (color === "hồng") color = "#ff6ec7";
-        else if (color === "tím") color = "purple";
-        else if (color === "xám") color = "gray";
-        else if (color === "bạc") color = "silver";
+colors.innerHTML = "";
 
-        btn.style.width = "36px";
-        btn.style.height = "36px";
-        btn.style.borderRadius = "50%";
-        btn.style.border = "2px solid #ddd";
-        btn.style.cursor = "pointer";
-        btn.style.background = color;
-        btn.style.marginRight = "10px";
+variants.forEach((v, index) => {
 
-        btn.title = v.color;
+const btn = document.createElement("button");
 
-        btn.onclick = () => {
+let color = (v.color || "").toLowerCase();
 
-            const img = v.images?.[0]?.imageUrl || "";
-            image.src = "http://localhost:8081" + img;
+if (color === "đen") color = "black";
+else if (color === "trắng") color = "white";
+else if (color === "đỏ") color = "red";
+else if (color === "xanh") color = "green";
+else if (color === "xanh dương") color = "blue";
+else if (color === "vàng") color = "gold";
+else if (color === "cam") color = "orange";
+else if (color === "hồng") color = "#ff6ec7";
+else if (color === "tím") color = "purple";
+else if (color === "xám") color = "gray";
+else if (color === "bạc") color = "silver";
 
-            const finalPrice = v.salePrice || v.price || 0;
+btn.style.width = "36px";
+btn.style.height = "36px";
+btn.style.borderRadius = "50%";
+btn.style.border = "2px solid #ddd";
+btn.style.cursor = "pointer";
+btn.style.background = color;
+btn.style.marginRight = "10px";
 
-            price.innerText = finalPrice.toLocaleString() + " đ";
+btn.title = v.color;
 
-        };
+btn.onclick = () => {
 
-        colors.appendChild(btn);
+const img = v.images?.[0]?.imageUrl || "";
+image.src = "http://localhost:8081" + img;
 
-        /* load first variant */
+const finalPrice = v.salePrice || v.price || 0;
+price.innerText = finalPrice.toLocaleString() + " đ";
 
-        if (index === 0) {
+};
 
-            const img = v.images?.[0]?.imageUrl || "";
-            image.src = "http://localhost:8081" + img;
+colors.appendChild(btn);
 
-            const finalPrice = v.salePrice || v.price || 0;
-            price.innerText = finalPrice.toLocaleString() + " đ";
+/* LOAD FIRST VARIANT */
 
-        }
+if (index === 0) {
 
-    });
+const img = v.images?.[0]?.imageUrl || "";
+image.src = "http://localhost:8081" + img;
+
+const finalPrice = v.salePrice || v.price || 0;
+price.innerText = finalPrice.toLocaleString() + " đ";
+
+}
+
+});
 
 }
 
@@ -113,17 +117,17 @@ TAB SWITCH
 
 function openTab(tabId, btn) {
 
-    document.querySelectorAll(".tab-content")
-        .forEach(tab => tab.classList.remove("active"));
+document.querySelectorAll(".tab-content")
+.forEach(tab => tab.classList.remove("active"));
 
-    document.querySelectorAll(".tab-btn")
-        .forEach(b => b.classList.remove("active"));
+document.querySelectorAll(".tab-btn")
+.forEach(b => b.classList.remove("active"));
 
-    document.getElementById(tabId).classList.add("active");
+document.getElementById(tabId).classList.add("active");
 
-    btn.classList.add("active");
+btn.classList.add("active");
+
 }
-
 
 /* =========================
 LOAD PAGE
