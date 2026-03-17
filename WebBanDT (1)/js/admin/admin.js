@@ -117,7 +117,7 @@ if(logoutBtn){
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("role");
         sessionStorage.removeItem("name");
-
+        
         alert("Đã đăng xuất");
 
         window.location.href = "login.html";

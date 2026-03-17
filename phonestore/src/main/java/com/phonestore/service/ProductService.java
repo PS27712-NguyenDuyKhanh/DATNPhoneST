@@ -92,9 +92,7 @@ public class ProductService {
        UPDATE VARIANTS
     ====================== */
 
-        variantRepository.deleteByProductId(id);
-
-        saveVariants(request, product);
+        updateVariants(request, product);
 
         return ProductMapper.toDTO(product);
     }
@@ -185,6 +183,50 @@ public class ProductService {
         spec.setProduct(product);
 
         specificationRepository.save(spec);
+    }
+
+    /// ///////////////
+    private void updateVariants(CreateProductRequest request, Product product){
+
+        if(request.getVariants() == null) return;
+
+        for(VariantDTO v : request.getVariants()){
+
+            Variant variant;
+
+            if(v.getId() != null){
+
+                variant = variantRepository.findById(v.getId())
+                        .orElse(new Variant());
+
+            }else{
+                variant = new Variant();
+            }
+
+            variant.setColor(v.getColor());
+            variant.setPrice(v.getPrice());
+            variant.setSalePrice(v.getSalePrice());
+            variant.setStock(v.getStock());
+            variant.setSaleStart(v.getSaleStart());
+            variant.setSaleEnd(v.getSaleEnd());
+            variant.setProduct(product);
+
+            variantRepository.save(variant);
+
+            if(v.getImages() != null){
+
+                imageRepository.deleteByVariantId(variant.getId());
+
+                for(ImageDTO img : v.getImages()){
+
+                    Image image = new Image();
+                    image.setImageUrl(img.getImageUrl());
+                    image.setVariant(variant);
+
+                    imageRepository.save(image);
+                }
+            }
+        }
     }
 
     // =========================
